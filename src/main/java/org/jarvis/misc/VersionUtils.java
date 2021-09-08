@@ -17,6 +17,18 @@ public class VersionUtils {
         return version != null && VERSION_PATTERN.matcher(version).matches();
     }
 
+    /**
+     * 比较两个版本间的大小
+     *
+     * 1.2.1 > 1.2.0
+     * 1.2.3 == 1.2.3
+     * 1 == 1.0.0
+     * 2.1 == 2.1.0
+     * 3.2.1 > 3.2
+     * @param version1
+     * @param version2
+     * @return
+     */
     public static int compare(String version1, String version2) {
         if (!isValid(version1) || !isValid(version2)) {
             throw new IllegalArgumentException("版本号格式不正确");
