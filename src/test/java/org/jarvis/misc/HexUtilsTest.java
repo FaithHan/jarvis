@@ -10,7 +10,7 @@ class HexUtilsTest {
     @Test
     void toHexTest() {
         byte[] bytes = new byte[]{1, 2, 0, -4, 5, 127};
-        Assertions.assertEquals("010200fc057f", HexUtils.toHex(bytes));
+        Assertions.assertEquals("010200fc057f", HexUtils.toHexString(bytes));
     }
 
     @Test
@@ -23,7 +23,7 @@ class HexUtilsTest {
     void allTest() {
         String string = "Jarvis开源工具库";
         byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
-        String hex = HexUtils.toHex(bytes);
+        String hex = HexUtils.toHexString(bytes);
         Assertions.assertEquals(string,new String(HexUtils.toBytes(hex), StandardCharsets.UTF_8));
     }
 

@@ -16,8 +16,8 @@ public abstract class HexUtils {
      * @param bytes
      * @return
      */
-    public static String toHex(byte[] bytes) {
-        StringBuilder sb = new StringBuilder(bytes.length >> 1);
+    public static String toHexString(byte[] bytes) {
+        StringBuilder sb = new StringBuilder(bytes.length << 1);
         for (byte byteValue : bytes) {
             int intValue = byteValue & 0xFF;
             sb.append(HEX_CHAR_ARRAY[intValue >>> 4]);
@@ -46,11 +46,11 @@ public abstract class HexUtils {
     /**
      * 判断hexString合法性
      *
-     * @param hex
+     * @param hexString
      * @return
      */
-    public static boolean isValidHexString(String hex) {
-        return hex != null && HEX_STRING_PATTERN.matcher(hex).matches();
+    public static boolean isValidHexString(String hexString) {
+        return hexString != null && HEX_STRING_PATTERN.matcher(hexString).matches();
     }
 
 }
