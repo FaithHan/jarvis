@@ -6,7 +6,7 @@ public abstract class DatePattern {
 
     public static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-    public static final String TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final String TIME_FORMAT = "HH:mm:ss";
 
 
 }
