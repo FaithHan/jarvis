@@ -2,16 +2,19 @@ package org.jarvis.date;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 public abstract class DateUtils {
 
-    public static String formatDate(Date date, String pattern) {
+    public static String format(Date date, String pattern) {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         return sdf.format(date);
     }
 
-    public static Date parseDate(String date, String pattern) {
+    public static Date parse(String date, String pattern) {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         try {
             return sdf.parse(date);
@@ -34,6 +37,18 @@ public abstract class DateUtils {
         return date1.compareTo(date2);
     }
 
+    public static LocalDateTime toLocalDateTime(Date date) {
+        if(null == date) {
+            return null;
+        }
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+    }
 
+    public static LocalDate toLocalDate(Date date) {
+        if(null == date) {
+            return null;
+        }
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
 
 }

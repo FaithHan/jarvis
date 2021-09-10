@@ -1,6 +1,7 @@
 package org.jarvis.date;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -88,5 +89,10 @@ public abstract class LocalDateTimeUtils {
     public static Date toDate(LocalDateTime localDateTime) {
         return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
+
+    public static LocalDate toLocalDate(LocalDateTime localDateTime) {
+        return localDateTime.toLocalDate();
+    }
+
 
 }
