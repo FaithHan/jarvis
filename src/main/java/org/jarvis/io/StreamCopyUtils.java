@@ -9,7 +9,7 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-public abstract class IOCopyUtils {
+public abstract class StreamCopyUtils {
 
     public static byte[] copyToByteArray(@Nullable InputStream in) throws IOException {
         return StreamUtils.copyToByteArray(in);
