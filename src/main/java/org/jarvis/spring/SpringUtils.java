@@ -18,4 +18,13 @@ public class SpringUtils implements ApplicationContextAware {
     public ApplicationContext getApplicationContext() {
         return SpringUtils.applicationContext;
     }
+
+    public static <T> T getBean(Class<T> clz) throws BeansException {
+        return applicationContext.getBean(clz);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T getBean(String name) throws BeansException {
+        return (T) applicationContext.getBean(name);
+    }
 }
