@@ -1,5 +1,6 @@
 package org.jarvis.misc;
 
+import org.jarvis.codec.Base64Utils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
