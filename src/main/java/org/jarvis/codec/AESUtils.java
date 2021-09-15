@@ -1,7 +1,6 @@
 package org.jarvis.codec;
 
 import lombok.extern.slf4j.Slf4j;
-import org.jarvis.misc.HexUtils;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -18,7 +17,7 @@ import java.security.NoSuchAlgorithmException;
  * SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
  */
 @Slf4j
-public class AESUtils {
+public abstract class AESUtils {
 
     private static final String ENCRY_ALGORITHM = "AES";
     /**
