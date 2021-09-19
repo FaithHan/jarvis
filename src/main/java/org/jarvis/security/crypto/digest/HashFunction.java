@@ -1,6 +1,6 @@
-package org.jarvis.codec;
+package org.jarvis.security.crypto.digest;
 
-class HashAlgorithms {
+class HashFunction {
 
     public static final String MD5 = "MD5";
 

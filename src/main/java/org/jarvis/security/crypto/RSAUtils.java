@@ -1,4 +1,4 @@
-package org.jarvis.codec;
+package org.jarvis.security.crypto;
 
 import lombok.SneakyThrows;
 

@@ -1,5 +1,6 @@
 package org.jarvis.misc;
 
+import org.jarvis.codec.HexUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

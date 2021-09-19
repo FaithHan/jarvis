@@ -1,12 +1,11 @@
-package org.jarvis.codec;
+package org.jarvis.security.codec;
 
-import org.jarvis.misc.HexUtils;
+import org.jarvis.codec.HexUtils;
+import org.jarvis.security.crypto.digest.HashUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class HashUtilsTest {
 

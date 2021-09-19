@@ -1,5 +1,6 @@
-package org.jarvis.codec;
+package org.jarvis.security.codec;
 
+import org.jarvis.security.crypto.RSAUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package org.jarvis.misc;
+package org.jarvis.codec;
 
 import java.util.regex.Pattern;
 

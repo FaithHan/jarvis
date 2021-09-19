@@ -1,24 +1,23 @@
-package org.jarvis.codec;
+package org.jarvis.security.crypto.digest;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.jarvis.misc.HexUtils;
+import org.jarvis.codec.HexUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import static org.jarvis.codec.HashAlgorithms.MD5;
-import static org.jarvis.codec.HashAlgorithms.SHA_1;
-import static org.jarvis.codec.HashAlgorithms.SHA_224;
-import static org.jarvis.codec.HashAlgorithms.SHA_256;
-import static org.jarvis.codec.HashAlgorithms.SHA_384;
-import static org.jarvis.codec.HashAlgorithms.SHA_512;
+import static org.jarvis.security.crypto.digest.HashFunction.MD5;
+import static org.jarvis.security.crypto.digest.HashFunction.SHA_1;
+import static org.jarvis.security.crypto.digest.HashFunction.SHA_224;
+import static org.jarvis.security.crypto.digest.HashFunction.SHA_256;
+import static org.jarvis.security.crypto.digest.HashFunction.SHA_384;
+import static org.jarvis.security.crypto.digest.HashFunction.SHA_512;
 
 /**
  * @see DigestUtils
  */
-//https://andaily.com/blog/?p=956
 public class HashUtils {
 
     private static final int STREAM_BUFFER_LENGTH = 2048;

@@ -1,4 +1,4 @@
-package org.jarvis.codec;
+package org.jarvis.security.crypto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -9,12 +9,14 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * BouncyCastle:
- * https://segmentfault.com/a/1190000023445325 <p>
- * GCM模式
- * https://cloud.tencent.com/developer/article/1161339
- * 随机序列固定
- * SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+ * <h2>本例采用AES加密，ECB加密模式，PKCS5Padding填充</h2>
+ * <br>
+ * <b>BouncyCastle:</b><br>
+ * https://segmentfault.com/a/1190000023445325 <br>
+ * <b>GCM模式:</b><br>
+ * https://cloud.tencent.com/developer/article/1161339 <br>
+ * <b>随机序列固定:</b><br>
+ * SecureRandom random = SecureRandom.getInstance("SHA1PRNG");<br>
  */
 @Slf4j
 public abstract class AESUtils {
