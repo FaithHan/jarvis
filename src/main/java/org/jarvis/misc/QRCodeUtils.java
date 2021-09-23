@@ -51,13 +51,13 @@ public class QRCodeUtils {
      */
     @SneakyThrows
     public static byte[] encode(String content) {
-        return encode(content, QRCodeFileType.PNG, DEFAULT_SIZE, DEFAULT_SIZE);
+        return encode(content, QRCodeFileType.PNG, DEFAULT_SIZE, DEFAULT_SIZE, false);
     }
 
 
     @SneakyThrows
     public static byte[] encode(String content, byte[] logo) {
-        byte[] encode = encode(content, QRCodeFileType.PNG, DEFAULT_SIZE, DEFAULT_SIZE);
+        byte[] encode = encode(content, QRCodeFileType.PNG, DEFAULT_SIZE, DEFAULT_SIZE, true);
         BufferedImage qrcode = ImageIO.read(new ByteArrayInputStream(encode));
         BufferedImage result = logoMatrix(qrcode, new ByteArrayInputStream(logo));
 
@@ -68,7 +68,7 @@ public class QRCodeUtils {
 
 
     @SneakyThrows
-    public static byte[] encode(String content, QRCodeFileType qrCodeFileType, int width, int height) {
+    public static byte[] encode(String content, QRCodeFileType qrCodeFileType, int width, int height, boolean binaryImage) {
         Map<EncodeHintType, Object> hints = new HashMap<>();
         hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
         hints.put(EncodeHintType.CHARACTER_SET, StandardCharsets.UTF_8.name());
@@ -76,8 +76,14 @@ public class QRCodeUtils {
         hints.put(EncodeHintType.MARGIN, "1");
 
         BitMatrix bitMatrix = new QRCodeWriter().encode(content, BarcodeFormat.QR_CODE, width, height, hints);
+        MatrixToImageConfig matrixToImageConfig;
+        if (binaryImage) {
+            matrixToImageConfig = new MatrixToImageConfig(0xFF000001, 0xFFFFFFFF);
+        } else {
+            // 黑白图片体积较小
+            matrixToImageConfig = new MatrixToImageConfig(Color.BLACK.getRGB(), Color.WHITE.getRGB());
+        }
 
-        MatrixToImageConfig matrixToImageConfig = new MatrixToImageConfig(0xFF000001, 0xFFFFFFFF);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         MatrixToImageWriter.writeToStream(bitMatrix, qrCodeFileType.name(), outputStream, matrixToImageConfig);
         return outputStream.toByteArray();
@@ -144,11 +150,11 @@ public class QRCodeUtils {
      * 参考：https://blog.csdn.net/weixin_39494923/article/details/79058799
      */
     private static BufferedImage logoMatrix(BufferedImage matrixImage, InputStream logoFile) throws IOException {
-        // 读取二维码图片，并构建绘图对象
-        Graphics2D g2 = matrixImage.createGraphics();
-
         int matrixWidth = matrixImage.getWidth();
         int matrixHeight = matrixImage.getHeight();
+
+        // 读取二维码图片，并构建绘图对象
+        Graphics2D g2 = matrixImage.createGraphics();
 
         // 读取Logo图片
         BufferedImage logo = ImageIO.read(logoFile);
@@ -159,15 +165,16 @@ public class QRCodeUtils {
         BasicStroke stroke = new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         g2.setStroke(stroke);// 设置笔画对象
         //指定弧度的圆角矩形
-        RoundRectangle2D.Float round = new RoundRectangle2D.Float(matrixWidth / 5 * 2, matrixHeight / 5 * 2, matrixWidth / 5, matrixHeight / 5, 20, 20);
+        RoundRectangle2D.Double round = new RoundRectangle2D.Double(matrixWidth / 5.0 * 2, matrixHeight / 5.0 * 2, matrixWidth / 5.0, matrixHeight / 5.0, 20, 20);
         g2.setColor(Color.white);
         g2.draw(round);// 绘制圆弧矩形
 
         //设置logo 有一道灰色边框
         BasicStroke stroke2 = new BasicStroke(1, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         g2.setStroke(stroke2);// 设置笔画对象
-        RoundRectangle2D.Float round2 = new RoundRectangle2D.Float(matrixWidth / 5 * 2 + 2, matrixHeight / 5 * 2 + 2, matrixWidth / 5 - 4, matrixHeight / 5 - 4, 20, 20);
+        RoundRectangle2D.Double round2 = new RoundRectangle2D.Double(matrixWidth / 5.0 * 2 + 2, matrixHeight / 5.0 * 2 + 2, matrixWidth / 5.0 - 4, matrixHeight / 5.0 - 4, 20, 20);
         g2.setColor(new Color(128, 128, 128));
+        g2.setPaint(new GradientPaint(0.0f, 100.0f, Color.red, 200.0f, 200.0f, Color.green, true));
         g2.draw(round2);// 绘制圆弧矩形
 
         g2.dispose();
@@ -176,7 +183,7 @@ public class QRCodeUtils {
     }
 
     public enum QRCodeFileType {
-        PNG, JPG
+        JPEG, PNG
     }
 
 
