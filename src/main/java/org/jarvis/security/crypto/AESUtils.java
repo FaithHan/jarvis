@@ -30,7 +30,7 @@ public abstract class AESUtils {
 
     public static byte[] generateAESKey() {
         try {
-            KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+            KeyGenerator keyGenerator = KeyGenerator.getInstance(ENCRY_ALGORITHM);
             // 128 or 192 or 256
             keyGenerator.init(128);
             SecretKey secretKey = keyGenerator.generateKey();
