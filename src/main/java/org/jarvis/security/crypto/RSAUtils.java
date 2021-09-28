@@ -19,7 +19,7 @@ public abstract class RSAUtils {
 
     private static final String CIPHER_MODE = "RSA/ECB/PKCS1Padding";
 
-    private static final String ENCRY_ALGORITHM = "RSA";
+    private static final String ALGORITHM = "RSA";
 
     public static byte[] encrypt(byte[] clearTextBytes, PublicKey publicKey) throws Exception {
         Cipher cipher = Cipher.getInstance(CIPHER_MODE);
@@ -48,7 +48,7 @@ public abstract class RSAUtils {
     public static KeyPair getKeyPair() {
         try {
             //KeyPairGenerator类用于生成公钥和密钥对，基于RSA算法生成对象
-            KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(ENCRY_ALGORITHM);
+            KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(ALGORITHM);
             //初始化密钥对生成器，密钥大小为96-1024位
             keyPairGen.initialize(1024, new SecureRandom());
             //生成一个密钥对，保存在keyPair中
@@ -75,12 +75,12 @@ public abstract class RSAUtils {
 
     @SneakyThrows
     public static PrivateKey toPrivateKey(byte[] privateKeyByteArray) {
-        return KeyFactory.getInstance(ENCRY_ALGORITHM).generatePrivate(new PKCS8EncodedKeySpec(privateKeyByteArray));
+        return KeyFactory.getInstance(ALGORITHM).generatePrivate(new PKCS8EncodedKeySpec(privateKeyByteArray));
     }
 
     @SneakyThrows
     public static PublicKey toPublicKey(byte[] publicKeyByteArray) {
-        return KeyFactory.getInstance(ENCRY_ALGORITHM).generatePublic(new X509EncodedKeySpec(publicKeyByteArray));
+        return KeyFactory.getInstance(ALGORITHM).generatePublic(new X509EncodedKeySpec(publicKeyByteArray));
     }
 
 }

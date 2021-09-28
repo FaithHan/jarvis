@@ -21,7 +21,7 @@ import java.security.NoSuchAlgorithmException;
 @Slf4j
 public abstract class AESUtils {
 
-    private static final String ENCRY_ALGORITHM = "AES";
+    private static final String ALGORITHM = "AES";
     /**
      * 加密算法/加密模式/填充类型
      * 本例采用AES加密，ECB加密模式，PKCS5Padding填充
@@ -30,7 +30,7 @@ public abstract class AESUtils {
 
     public static byte[] generateAESKey() {
         try {
-            KeyGenerator keyGenerator = KeyGenerator.getInstance(ENCRY_ALGORITHM);
+            KeyGenerator keyGenerator = KeyGenerator.getInstance(ALGORITHM);
             // 128 or 192 or 256
             keyGenerator.init(128);
             SecretKey secretKey = keyGenerator.generateKey();
@@ -43,7 +43,7 @@ public abstract class AESUtils {
     public static byte[] encrypt(byte[] clearTextBytes, byte[] keyBytes) {
         try {
             // 1 获取加密密钥
-            SecretKeySpec keySpec = new SecretKeySpec(keyBytes, ENCRY_ALGORITHM);
+            SecretKeySpec keySpec = new SecretKeySpec(keyBytes, ALGORITHM);
             // 2 获取Cipher实例
             Cipher cipher = Cipher.getInstance(CIPHER_MODE);
             // 3 初始化Cipher实例。设置执行模式以及加密密钥
@@ -59,7 +59,7 @@ public abstract class AESUtils {
     public static byte[] decrypt(byte[] cipherTextBytes, byte[] keyBytes) {
         try {
             // 1 获取解密密钥
-            SecretKeySpec keySpec = new SecretKeySpec(keyBytes, ENCRY_ALGORITHM);
+            SecretKeySpec keySpec = new SecretKeySpec(keyBytes, ALGORITHM);
 
             // 2 获取Cipher实例
             Cipher cipher = Cipher.getInstance(CIPHER_MODE);
