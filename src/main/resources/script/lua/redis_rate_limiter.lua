@@ -1,11 +1,17 @@
+-- function
+local getTimestamp = function ()
+    local temp = redis.call('time')
+    return temp[1] + temp[2] / 1000000
+end
+
+
 local key = KEYS[1]
 
 local rate = tonumber(ARGV[1])
 local capacity = tonumber(ARGV[2])
 local requested = tonumber(ARGV[3])
 
-local temp = redis.call('time')
-local now = temp[1] + temp[2] / 1000000
+local now = getTimestamp()
 -- sec
 local ttl = 2
 

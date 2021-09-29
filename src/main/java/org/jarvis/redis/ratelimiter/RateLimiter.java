@@ -1,6 +1,7 @@
 package org.jarvis.redis.ratelimiter;
 
-import java.time.Instant;
+import org.jarvis.misc.Stopwatch;
+
 import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.MICROSECONDS;
@@ -13,9 +14,9 @@ public abstract class RateLimiter {
     }
 
     public double acquire(int permits) {
-        long from = Instant.now().toEpochMilli();
+        Stopwatch stopwatch = Stopwatch.createStarted();
         tryAcquire(permits, -1, MILLISECONDS);
-        return Instant.now().toEpochMilli() - from;
+        return stopwatch.elapsedMillis();
     }
 
     public boolean tryAcquire() {
