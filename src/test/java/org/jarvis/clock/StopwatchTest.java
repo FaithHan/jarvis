@@ -8,8 +8,9 @@ class StopwatchTest {
 
     @Test
     void create() {
+        System.out.println(System.nanoTime());
         Stopwatch stopwatch = Stopwatch.createStarted();
         TimeUtils.sleep(1);
-        System.out.println(stopwatch.elapsedSeconds());
+        System.out.println(stopwatch.elapsedMillis());
     }
 }
