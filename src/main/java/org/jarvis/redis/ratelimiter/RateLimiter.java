@@ -1,11 +1,8 @@
 package org.jarvis.redis.ratelimiter;
 
-import org.jarvis.misc.Stopwatch;
-
 import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.MICROSECONDS;
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 public abstract class RateLimiter {
 
@@ -13,11 +10,7 @@ public abstract class RateLimiter {
         return acquire(1);
     }
 
-    public double acquire(int permits) {
-        Stopwatch stopwatch = Stopwatch.createStarted();
-        tryAcquire(permits, -1, MILLISECONDS);
-        return stopwatch.elapsedMillis();
-    }
+    public abstract double acquire(int permits);
 
     public boolean tryAcquire() {
         return tryAcquire(1, 0, MICROSECONDS);
