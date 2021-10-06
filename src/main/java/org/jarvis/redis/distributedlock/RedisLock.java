@@ -140,23 +140,23 @@ public class RedisLock {
             setResultType(Long.class);
             setScriptText(
                     "local key = KEYS[1]\n" +
-                            "local value = ARGV[1]\n" +
-                            "local ttl = tonumber(ARGV[2])\n" +
-                            "\n" +
-                            "if (redis.call('exists', key) == 1) then\n" +
-                            "    if (redis.call('hget', key, 'locker') == value) then\n" +
-                            "        --如果已经持有锁, 重入\n" +
-                            "        return redis.call('hincrby', key, 'times', 1)\n" +
-                            "    else\n" +
-                            "        -- 如果未持有, 则抢占锁未成功\n" +
-                            "        return 0\n" +
-                            "    end\n" +
-                            "else\n" +
-                            "    redis.call('hset', key, 'locker', value)\n" +
-                            "    local times = redis.call('hincrby', key, 'times', 1)\n" +
-                            "    redis.call('pexpire', key, ttl)\n" +
-                            "    return times\n" +
-                            "end");
+                    "local value = ARGV[1]\n" +
+                    "local ttl = tonumber(ARGV[2])\n" +
+                    "\n" +
+                    "if (redis.call('exists', key) == 1) then\n" +
+                    "    if (redis.call('hget', key, 'locker') == value) then\n" +
+                    "        --如果已经持有锁, 重入\n" +
+                    "        return redis.call('hincrby', key, 'times', 1)\n" +
+                    "    else\n" +
+                    "        -- 如果未持有, 则抢占锁未成功\n" +
+                    "        return 0\n" +
+                    "    end\n" +
+                    "else\n" +
+                    "    redis.call('hset', key, 'locker', value)\n" +
+                    "    local times = redis.call('hincrby', key, 'times', 1)\n" +
+                    "    redis.call('pexpire', key, ttl)\n" +
+                    "    return times\n" +
+                    "end");
         }
     };
 
@@ -165,14 +165,14 @@ public class RedisLock {
             setResultType(Long.class);
             setScriptText(
                     "if (redis.call('exists', KEYS[1]) == 1 and redis.call('hget', KEYS[1], 'locker') == ARGV[1]) then\n" +
-                            "    local times = redis.call('hincrby', KEYS[1], 'times', -1)\n" +
-                            "    if (times == 0) then\n" +
-                            "        redis.call('del', KEYS[1])\n" +
-                            "    end\n" +
-                            "    return times\n" +
-                            "else\n" +
-                            "    return -1\n" +
-                            "end");
+                    "    local times = redis.call('hincrby', KEYS[1], 'times', -1)\n" +
+                    "    if (times == 0) then\n" +
+                    "        redis.call('del', KEYS[1])\n" +
+                    "    end\n" +
+                    "    return times\n" +
+                    "else\n" +
+                    "    return -1\n" +
+                    "end");
         }
     };
 
@@ -181,8 +181,8 @@ public class RedisLock {
             setResultType(Long.class);
             setScriptText(
                     "if (redis.call('exists', KEYS[1]) == 1 and redis.call('hget', KEYS[1], 'locker') == ARGV[1]) then\n" +
-                            "    redis.call('pexpire', KEYS[1], ARGV[2])\n" +
-                            "end");
+                    "    redis.call('pexpire', KEYS[1], ARGV[2])\n" +
+                    "end");
         }
     };
 
