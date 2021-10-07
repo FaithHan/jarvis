@@ -1,8 +1,11 @@
 package org.jarvis.json;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+
+import java.lang.reflect.Type;
 
 public abstract class JsonUtils {
 
@@ -19,9 +22,14 @@ public abstract class JsonUtils {
     }
 
     @SneakyThrows
-    public static <T> T toObj(String json, TypeReference<T> typeReference)  {
-        return objectMapper.readValue(json,typeReference );
+    public static <T> T toObj(String json, TypeReference<T> typeReference) {
+        return objectMapper.readValue(json, typeReference);
     }
 
-    
+    @SneakyThrows
+    public static <T> T toObj(String json, Type type) {
+        JavaType javaType = objectMapper.getTypeFactory().constructType(type);
+        return objectMapper.readValue(json, javaType);
+    }
+
 }
