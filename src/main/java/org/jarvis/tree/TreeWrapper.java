@@ -196,7 +196,7 @@ public class TreeWrapper<E> {
                 throw new IllegalStateException("children只能是 list 或者 array");
             }
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(e);
         }
     }
 
