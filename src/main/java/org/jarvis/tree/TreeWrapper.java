@@ -10,8 +10,10 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
 import java.util.stream.Collectors;
@@ -27,11 +29,13 @@ public class TreeWrapper<E> {
 
     private final String weight;
 
-    private List<E> rootNodeList;
+    private final Class<E> classValue;
 
     private List<E> nodeList;
 
-    private final Class<E> classValue;
+    private List<E> rootNodeList;
+
+    private Map<Object, E> nodeMap;
 
 
     public static <E> TreeWrapper<E> create(List<E> nodeList) {
@@ -59,10 +63,11 @@ public class TreeWrapper<E> {
     }
 
     public E getNodeById(Object id) {
-        return nodeList.stream()
-                .filter(node -> Objects.equals(id, getId(node)))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("没有对应的元素"));
+        E element = this.nodeMap.get(id);
+        if (element == null) {
+            throw new IllegalArgumentException("没有对应的元素");
+        }
+        return element;
     }
 
     public E getRootNodeByTreeId(Object id) {
@@ -125,22 +130,28 @@ public class TreeWrapper<E> {
             setChildren(node, children);
         }
 
-        List<Object> idList = this.nodeList.stream()
-                .map(this::getId)
-                .collect(Collectors.toList());
+        HashMap<Object, E> nodeMap = new HashMap<>();
 
+        for (E node : this.nodeList) {
+            E oldNode = nodeMap.put(getId(node), node);
+            if (oldNode != null) {
+                throw new IllegalArgumentException("node list can not have duplicated elements");
+            }
+        }
+        this.nodeMap = nodeMap;
         this.rootNodeList = this.nodeList.stream()
-                .filter(node -> !idList.contains(getParentId(node)))
+                .filter(node -> !this.nodeMap.containsKey(getParentId(node)))
                 .collect(Collectors.toList());
     }
 
     private void rebuild() {
-        nodeList.forEach(node -> setChildren(node, null));
+        destroy();
         build();
     }
 
     public void destroy() {
         nodeList.forEach(node -> setChildren(node, null));
+        nodeMap = null;
         rootNodeList = null;
     }
 
