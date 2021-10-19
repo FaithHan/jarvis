@@ -1,6 +1,6 @@
 package org.jarvis.security.crypto.digest;
 
-class HashFunction {
+class HashAlgorithm {
 
     public static final String MD5 = "MD5";
 

@@ -19,11 +19,11 @@ public class HMACProvider {
 
     private final Mac mac;
 
-    public HMACProvider(HmacFunction algorithm, String key) {
+    public HMACProvider(HmacAlgorithm algorithm, String key) {
         this(algorithm.getName(), StringUtils.getBytesUtf8(key));
     }
 
-    public HMACProvider(HmacFunction algorithm, byte[] key) {
+    public HMACProvider(HmacAlgorithm algorithm, byte[] key) {
         this(algorithm.getName(), key);
     }
 

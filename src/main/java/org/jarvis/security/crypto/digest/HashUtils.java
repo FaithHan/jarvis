@@ -8,12 +8,12 @@ import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import static org.jarvis.security.crypto.digest.HashFunction.MD5;
-import static org.jarvis.security.crypto.digest.HashFunction.SHA_1;
-import static org.jarvis.security.crypto.digest.HashFunction.SHA_224;
-import static org.jarvis.security.crypto.digest.HashFunction.SHA_256;
-import static org.jarvis.security.crypto.digest.HashFunction.SHA_384;
-import static org.jarvis.security.crypto.digest.HashFunction.SHA_512;
+import static org.jarvis.security.crypto.digest.HashAlgorithm.MD5;
+import static org.jarvis.security.crypto.digest.HashAlgorithm.SHA_1;
+import static org.jarvis.security.crypto.digest.HashAlgorithm.SHA_224;
+import static org.jarvis.security.crypto.digest.HashAlgorithm.SHA_256;
+import static org.jarvis.security.crypto.digest.HashAlgorithm.SHA_384;
+import static org.jarvis.security.crypto.digest.HashAlgorithm.SHA_512;
 
 /**
  * @see DigestUtils

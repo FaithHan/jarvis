@@ -11,7 +11,7 @@ package org.jarvis.security.crypto.mac;
  *      "http://docs.oracle.com/javase/9/security/oracleproviders.htm#JSSEC-GUID-A47B1249-593C-4C38-A0D0-68FA7681E0A7">
  *      Java 9 Cryptography Architecture Sun Providers Documentation</a>
  */
-public enum HmacFunction {
+public enum HmacAlgorithm {
 
     HMAC_MD5("HmacMD5"),
 
@@ -27,7 +27,7 @@ public enum HmacFunction {
 
     private final String name;
 
-    HmacFunction(final String algorithm) {
+    HmacAlgorithm(final String algorithm) {
         this.name = algorithm;
     }
 
