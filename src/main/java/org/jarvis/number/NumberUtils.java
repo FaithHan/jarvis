@@ -1,4 +1,6 @@
-package org.jarvis.misc;
+package org.jarvis.number;
+
+import org.jarvis.misc.Assert;
 
 import java.lang.reflect.Array;
 
