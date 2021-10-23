@@ -22,7 +22,7 @@ public abstract class DESUtils {
      * 密钥为 8 Bytes
      * @return
      */
-    public static byte[] generateAESKey() {
+    public static byte[] generateDESKey() {
         try {
             KeyGenerator keyGenerator = KeyGenerator.getInstance(ALGORITHM);
             keyGenerator.init(56);

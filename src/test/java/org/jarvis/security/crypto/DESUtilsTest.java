@@ -11,7 +11,7 @@ class DESUtilsTest {
 
     @Test
     void encrypt() {
-        byte[] bytes = DESUtils.generateAESKey();
+        byte[] bytes = DESUtils.generateDESKey();
         byte[] cipherTextBytes = DESUtils.encrypt("你好".getBytes(StandardCharsets.UTF_8), bytes);
         byte[] clearTextBytes = DESUtils.decrypt(cipherTextBytes, bytes);
         String clearText = new String(clearTextBytes, StandardCharsets.UTF_8);
