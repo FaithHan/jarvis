@@ -47,7 +47,7 @@ public abstract class JWTService {
 
     protected Map<String, Object> header(){
         return Collections.emptyMap();
-    };
+    }
 
     protected Date expireTime() {
         return LocalDateTimeUtils.toDate(LocalDateTime.now().plusMinutes(DEFAULT_EXPIRE_MINUTE));
