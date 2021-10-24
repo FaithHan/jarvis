@@ -8,6 +8,9 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * <h2>本例采用DES加密，ECB加密模式，PKCS5Padding填充</h2>
+ */
 @Slf4j
 public abstract class DESUtils {
 

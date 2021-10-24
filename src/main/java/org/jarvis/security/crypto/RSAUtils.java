@@ -15,6 +15,9 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * <h2>本例采用RSA加密，ECB加密模式，PKCS1Padding填充</h2>
+ */
 public abstract class RSAUtils {
 
     private static final String CIPHER_MODE = "RSA/ECB/PKCS1Padding";
