@@ -15,7 +15,7 @@ import java.security.SignatureException;
  */
 public class SignatureUtils {
 
-    private static String algorithm = SignatureFunction.RS_256;
+    private static String algorithm = SignatureAlgorithm.RS_256;
 
     private static PublicKey publicKey;
 

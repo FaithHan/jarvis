@@ -29,7 +29,7 @@ class SignatureUtilsTest {
 
     @Test
     void verify_with_RSA_512() {
-        SignatureUtils.config(SignatureFunction.RS_521);
+        SignatureUtils.config(SignatureAlgorithm.RS_521);
         byte[] sign = SignatureUtils.sign(text.getBytes(StandardCharsets.UTF_8));
         boolean verifyResult = SignatureUtils.verify(text.getBytes(StandardCharsets.UTF_8), sign);
         assertTrue(verifyResult);

@@ -1,7 +1,7 @@
 package org.jarvis.security.crypto.signature;
 
 
-public class SignatureFunction {
+public class SignatureAlgorithm {
 
     public static final String RS_256 = "SHA256withRSA";
 
