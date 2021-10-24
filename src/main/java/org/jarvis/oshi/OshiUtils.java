@@ -2,7 +2,6 @@ package org.jarvis.oshi;
 
 
 import oshi.SystemInfo;
-import oshi.driver.linux.proc.CpuInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.ComputerSystem;
 import oshi.hardware.GlobalMemory;
