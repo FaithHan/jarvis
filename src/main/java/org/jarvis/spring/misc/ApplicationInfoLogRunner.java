@@ -11,6 +11,9 @@ import org.springframework.boot.web.context.WebServerApplicationContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+/**
+ * 功能：输出PID，JDK版本，打印web容器内网地址和外网地址
+ */
 @Slf4j
 public class ApplicationInfoLogRunner implements CommandLineRunner, ApplicationContextAware {
 
