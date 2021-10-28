@@ -13,8 +13,6 @@ import java.security.NoSuchAlgorithmException;
  * <br>
  * <b>BouncyCastle:</b><br>
  * https://segmentfault.com/a/1190000023445325 <br>
- * <b>GCM模式:</b><br>
- * https://cloud.tencent.com/developer/article/1161339 <br>
  * <b>随机序列固定:</b><br>
  * SecureRandom random = SecureRandom.getInstance("SHA1PRNG");<br>
  */
