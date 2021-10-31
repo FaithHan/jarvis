@@ -51,6 +51,7 @@ class MailUtilsTest {
                         "    <p>我不知道你是谁</p>\n" +
                         "    <img src='cid:img1' alt=''>\n" +
                         "</div>")
+                .priority(PriorityEnum.HIGH)
                 .addInline("img1", new FileInputStream("/Users/hanfei08/IdeaProjects/resourceRepo/img.png"))
                 .addAttachment("这是一个.pptx", new FileInputStream("/Users/hanfei08/Documents/密码分享.pptx"))
                 .build();
