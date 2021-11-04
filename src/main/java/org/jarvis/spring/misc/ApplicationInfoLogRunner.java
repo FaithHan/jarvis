@@ -17,6 +17,10 @@ import org.springframework.context.ApplicationContextAware;
 @Slf4j
 public class ApplicationInfoLogRunner implements CommandLineRunner, ApplicationContextAware {
 
+    private static final String LOOPBACK_ADDRESS = "127.0.0.1";
+
+    private static final String URL_FORMAT = "http://%s:%d";
+
     private final boolean openBrowser;
 
     private ApplicationContext applicationContext;
@@ -46,8 +50,8 @@ public class ApplicationInfoLogRunner implements CommandLineRunner, ApplicationC
 
     private void initApplicationInfo() {
         int port = ((WebServerApplicationContext) applicationContext).getWebServer().getPort();
-        this.localAddress = "http://127.0.0.1:" + port;
-        this.internetAddress = "http://" + IPUtils.getLocalIp() + ":" + port;
+        this.localAddress = String.format(URL_FORMAT, LOOPBACK_ADDRESS, port);
+        this.internetAddress = String.format(URL_FORMAT, IPUtils.getLocalIp(), port);
     }
 
     private void printApplicationInfo() {
