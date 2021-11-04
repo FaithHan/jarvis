@@ -1,5 +1,8 @@
 package org.jarvis.email;
 
+import org.apache.commons.lang3.StringUtils;
+import org.jarvis.misc.Assert;
+
 import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -58,6 +61,7 @@ public class Email {
         }
 
         public EmailBuilder addAttachment(String fileName, InputStream attachment) {
+            Assert.isTrue(StringUtils.isNotBlank(fileName),"fileName can not be blank");
             this.attachmentMap.put(fileName, attachment);
             return this;
         }
@@ -66,6 +70,7 @@ public class Email {
             if (!this.isHtml) {
                 throw new IllegalArgumentException("plain text mail can not add inline");
             }
+            Assert.isTrue(StringUtils.isNotBlank(cid),"cid can not be blank");
             this.inlineMap.put(cid, inline);
             return this;
         }

@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 import static org.jarvis.email.PriorityEnum.NORMAL;
@@ -115,18 +116,23 @@ public class MailUtils {
                 case NORMAL:
                 default:
             }
-            if (attachmentMap != null) {
+            if (Objects.nonNull(attachmentMap)) {
                 for (Map.Entry<String, InputStream> entry : attachmentMap.entrySet()) {
-                    String name = entry.getKey();
+                    String fileName = entry.getKey();
                     InputStream inputStream = entry.getValue();
-                    helper.addAttachment(name, new ByteArrayResource(StreamCopyUtils.copyToByteArray(inputStream)));
+                    helper.addAttachment(fileName, new ByteArrayResource(StreamCopyUtils.copyToByteArray(inputStream)));
                 }
             }
-            if (isHTML && inlineMap != null) {
+            if (isHTML && Objects.nonNull(inlineMap)) {
                 for (Map.Entry<String, InputStream> entry : inlineMap.entrySet()) {
                     String cuid = entry.getKey();
                     InputStream inputStream = entry.getValue();
-                    helper.addInline(cuid, new ByteArrayResource(StreamCopyUtils.copyToByteArray(inputStream)), DEFAULT_CONTENT_TYPE);
+                    helper.addInline(cuid, new ByteArrayResource(StreamCopyUtils.copyToByteArray(inputStream)){
+                        @Override
+                        public String getFilename() {
+                            return cuid;
+                        }
+                    });
                 }
             }
             sendMessage(message);
