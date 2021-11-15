@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.jarvis.json.JsonUtils;
 import org.jarvis.misc.Assert;
+import org.springframework.lang.NonNull;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -47,7 +48,7 @@ public class TreeWrapper<E> {
     }
 
     private TreeWrapper(List<E> nodeList, String id, String parentId, String weight, String children) {
-        Assert.notNull(nodeList, "node list can not be null");
+        Assert.isTrue(nodeList != null && !nodeList.isEmpty(), "node list can not be empty");
         this.id = id;
         this.parentId = parentId;
         this.weight = weight;
@@ -65,20 +66,17 @@ public class TreeWrapper<E> {
     public E getNodeById(Object id) {
         E element = this.nodeMap.get(id);
         if (element == null) {
-            throw new IllegalArgumentException("没有对应的元素");
+            throw new IllegalArgumentException("Do not find the corresponding element according by id");
         }
         return element;
     }
 
     public E getRootNodeByTreeId(Object id) {
-        E currentNode = nodeList.stream()
-                .filter(node -> Objects.equals(id, getId(node)))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("没有对应的元素"));
+        E currentNode = getNodeById(id);
         while (true) {
             try {
                 currentNode = getNodeById(getParentId(currentNode));
-            } catch (Exception exception) {
+            } catch (IllegalArgumentException exception) {
                 break;
             }
         }
@@ -138,16 +136,13 @@ public class TreeWrapper<E> {
                 throw new IllegalArgumentException("node list can not have duplicated elements");
             }
         }
+
         this.nodeMap = nodeMap;
         this.rootNodeList = this.nodeList.stream()
                 .filter(node -> !this.nodeMap.containsKey(getParentId(node)))
                 .collect(Collectors.toList());
     }
 
-    private void rebuild() {
-        destroy();
-        build();
-    }
 
     public void destroy() {
         nodeList.forEach(node -> setChildren(node, null));
@@ -177,10 +172,11 @@ public class TreeWrapper<E> {
             field.setAccessible(true);
             return field.get(node);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(e);
         }
     }
 
+    @NonNull
     private List<E> getChildren(E node) {
         try {
             Field field = classValue.getDeclaredField(children);
@@ -196,7 +192,7 @@ public class TreeWrapper<E> {
                 throw new IllegalStateException("children只能是 list 或者 array");
             }
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new IllegalArgumentException(e);
+            throw new IllegalStateException(e);
         }
     }
 
@@ -204,7 +200,7 @@ public class TreeWrapper<E> {
         try {
             Field field = classValue.getDeclaredField(children);
             field.setAccessible(true);
-            if (List.class.isAssignableFrom(field.getType())) {
+            if (childrenList == null || List.class.isAssignableFrom(field.getType())) {
                 field.set(node, childrenList);
             } else if (field.getType().isArray()) {
                 E[] childrenArray = (E[]) Array.newInstance(classValue, childrenList.size());
@@ -216,7 +212,7 @@ public class TreeWrapper<E> {
                 throw new IllegalStateException("children只能是 list 或者 array");
             }
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 
