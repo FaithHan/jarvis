@@ -57,8 +57,10 @@ public class SegmentIdGenerator implements IdGenerator<Long> {
         Assert.notNull(dataSource, "dataSource can not be null");
         Assert.isTrue(bizType != null && bizType.trim().length() > 0, "bizType can not be blank");
         Assert.isTrue(capacity > 0, "capacity must be positive");
-        Assert.isTrue(threshold > 0, "threshold must be positive");
-        Assert.isTrue(threshold < capacity, "threshold must less than capacity");
+        if (asyncUpdate) {
+            Assert.isTrue(threshold < capacity, "threshold must less than capacity");
+            Assert.isTrue(threshold > 0, "threshold must be positive");
+        }
 
         this.dataSource = dataSource;
         this.bizType = bizType;
