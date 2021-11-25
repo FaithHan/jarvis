@@ -32,7 +32,7 @@ public class ConsistentHashUtils {
         //引入虚拟节点： 添加1000倍虚拟节点，将10台server对应的虚拟节点放入TreeMap中
         for (Node node : realNodes) {
             for (int i = 1; i <= 1000; i++) {
-                String nodeName = node.getName() + "-VM" + String.valueOf(i);
+                String nodeName = node.getName() + "-VM" + i;
                 int hash = getHash(nodeName);//nodeName.hashCode();
                 sortedMap.put(hash, node);
                 System.out.println("虚拟节点hash:" + hash + "【" + nodeName + "】放入");
