@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 public class LRUCacheTest {
 
     private LRUCache<String, String> lruCache;
@@ -22,9 +24,10 @@ public class LRUCacheTest {
         lruCache.put("hehe3", "haha");
         lruCache.put("hehe4", "haha");
         lruCache.put("hehe5", "haha");
+        lruCache.get("hehe1");
         lruCache.put("hehe6", "haha");
         System.out.println(lruCache.size());
-        System.out.println(lruCache);
+        assertNull(lruCache.get("hehe2").orElse(null));
     }
 
     @Test
