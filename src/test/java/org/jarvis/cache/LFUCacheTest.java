@@ -8,7 +8,7 @@ class LFUCacheTest {
 
     @Test
     void lfuCacheTest() {
-        LFUCache<String, String> lfuCache = new LFUCache<String, String>(3);
+        LFUCache<String, String> lfuCache = new LFUCache<>(3);
         lfuCache.put("1","1");
         lfuCache.put("2","2");
         lfuCache.put("3","3");
