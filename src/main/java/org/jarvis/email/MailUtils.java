@@ -30,8 +30,6 @@ import static org.jarvis.email.PriorityEnum.NORMAL;
 @Slf4j
 public class MailUtils {
 
-    private static final String DEFAULT_CONTENT_TYPE = "application/octet-stream";
-
     private static final String[] EMPTY_ARRAY = new String[]{};
 
     private static final JavaMailSender SENDER;
