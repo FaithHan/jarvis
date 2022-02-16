@@ -21,7 +21,7 @@ public abstract class JWTService {
 
     private static final RSAKeyProvider RSA_KEY_PROVIDER = new RSAKeyProvider() {
 
-        private final KeyPair keyPair = RSAUtils.getKeyPair();
+        private final KeyPair keyPair = RSAUtils.genKeyPair();
 
         @Override
         public RSAPublicKey getPublicKeyById(String keyId) {
