@@ -1,5 +1,6 @@
 package org.jarvis.security.crypto.signature;
 
+import org.jarvis.codec.Base64Utils;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
@@ -15,9 +16,14 @@ class SignatureUtilsTest {
 
     @Test
     void verify_with_RSA_256() {
-        byte[] sign = SignatureUtils.sign(text.getBytes(StandardCharsets.UTF_8));
-        boolean verifyResult = SignatureUtils.verify(text.getBytes(StandardCharsets.UTF_8), sign);
-        assertTrue(verifyResult);
+        SignatureUtils.algorithm = SignatureAlgorithm.RS_256_PSS;
+        for (int i = 0; i < 5; i++) {
+            byte[] sign = SignatureUtils.sign(text.getBytes(StandardCharsets.UTF_8));
+            System.out.println(Base64Utils.encode(sign));
+            boolean verifyResult = SignatureUtils.verify(text.getBytes(StandardCharsets.UTF_8), sign);
+            assertTrue(verifyResult);
+        }
+
     }
 
     @Test

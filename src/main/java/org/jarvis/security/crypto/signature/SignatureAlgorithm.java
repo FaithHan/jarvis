@@ -5,8 +5,11 @@ public class SignatureAlgorithm {
 
     public static final String RS_256 = "SHA256withRSA";
 
+    public static final String RS_256_PSS = "SHA256withRSA/PSS";
+
     public static final String RS_384 = "SHA384withRSA";
 
     public static final String RS_521 = "SHA512withRSA";
+
 
 }

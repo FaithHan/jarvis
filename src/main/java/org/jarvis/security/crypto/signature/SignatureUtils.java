@@ -1,30 +1,42 @@
 package org.jarvis.security.crypto.signature;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.jarvis.codec.Base64Utils;
 import org.jarvis.security.crypto.RSAUtils;
 
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.Security;
 import java.security.Signature;
 import java.security.SignatureException;
+import java.security.spec.MGF1ParameterSpec;
+import java.security.spec.PSSParameterSpec;
 
 /**
  *  数字签名工具类
  */
 public class SignatureUtils {
 
-    private static String algorithm = SignatureAlgorithm.RS_256;
+    public static String algorithm = SignatureAlgorithm.RS_256;
 
-    private static PublicKey publicKey;
+    private static PublicKey defaultPublicKey;
 
-    private static PrivateKey privateKey;
+    private static PrivateKey defaultPrivateKey;
+
+    static {
+        Security.addProvider(new BouncyCastleProvider());
+    }
 
     public static byte[] sign(byte[] contentBytes) {
         try {
             Signature s = Signature.getInstance(algorithm);
-            s.initSign(privateKey);
+            if (algorithm.equals(SignatureAlgorithm.RS_256_PSS)) {
+                s.setParameter(new PSSParameterSpec(MGF1ParameterSpec.SHA256.getDigestAlgorithm(), "MGF1", MGF1ParameterSpec.SHA256, 32, 1));
+            }
+            s.initSign(defaultPrivateKey);
             s.update(contentBytes);
             return s.sign();
         } catch (NoSuchAlgorithmException e) {
@@ -33,13 +45,18 @@ public class SignatureUtils {
             throw new RuntimeException(e);
         } catch (SignatureException e) {
             throw new RuntimeException(e);
+        } catch (InvalidAlgorithmParameterException e) {
+            throw new RuntimeException(e);
         }
     }
 
     public static boolean verify(byte[] contentBytes, byte[] signatureBytes) {
         try {
             Signature s = Signature.getInstance(algorithm);
-            s.initVerify(publicKey);
+            if (algorithm.equals(SignatureAlgorithm.RS_256_PSS)) {
+                s.setParameter(new PSSParameterSpec(MGF1ParameterSpec.SHA256.getDigestAlgorithm(), "MGF1", MGF1ParameterSpec.SHA256, 32, 1));
+            }
+            s.initVerify(defaultPublicKey);
             s.update(contentBytes);
             return s.verify(signatureBytes);
         } catch (NoSuchAlgorithmException e) {
@@ -47,6 +64,8 @@ public class SignatureUtils {
         } catch (InvalidKeyException e) {
             throw new RuntimeException(e);
         } catch (SignatureException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidAlgorithmParameterException e) {
             throw new RuntimeException(e);
         }
     }
@@ -59,8 +78,8 @@ public class SignatureUtils {
 
     public static void config(PublicKey publicKey, PrivateKey privateKey) {
         if (publicKey != null && privateKey != null) {
-            SignatureUtils.publicKey = publicKey;
-            SignatureUtils.privateKey = privateKey;
+            SignatureUtils.defaultPublicKey = publicKey;
+            SignatureUtils.defaultPrivateKey = privateKey;
         }
     }
 
@@ -80,8 +99,8 @@ public class SignatureUtils {
                 "IzvaA/325aTJn/DzU7yGuBQgNypvkMWe8SLFn40WxjjyIb25SZIr7ZmZr/8JwJBAMI3Ce06T1ArCp0Ex9Sbir87EoyU" +
                 "Nkn1tnQBqYflt4WvEY1JtLD7+xQmw2g7AZRJjwhlxfN0wmPDTDEItwGpKq4=";
 
-        publicKey = RSAUtils.toPublicKey(Base64Utils.decode(publicKeyString));
+        defaultPublicKey = RSAUtils.toPublicKey(Base64Utils.decode(publicKeyString));
 
-        privateKey = RSAUtils.toPrivateKey(Base64Utils.decode(privateKeyString));
+        defaultPrivateKey = RSAUtils.toPrivateKey(Base64Utils.decode(privateKeyString));
     }
 }
