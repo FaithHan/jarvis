@@ -12,7 +12,7 @@ class RSAUtilsTest {
 
     @Test
     void public_encrypt_private_decrypt() throws Exception {
-        Map<Integer, byte[]> keyPairMap = RSAUtils.getKeyPairMap();
+        Map<Integer, byte[]> keyPairMap = RSAUtils.genKeyPairMap();
         byte[] publicKeyByteArray = keyPairMap.get(0);
         byte[] privateKeyByteArray = keyPairMap.get(1);
         String text = "测试字符串";
@@ -24,7 +24,7 @@ class RSAUtilsTest {
 
     @Test
     void private_encrypt_public_decrypt() throws Exception {
-        KeyPair keyPairMap = RSAUtils.getKeyPair();
+        KeyPair keyPairMap = RSAUtils.genKeyPair();
         String text = "测试字符串";
         byte[] encrypt = RSAUtils.encrypt(text.getBytes(StandardCharsets.UTF_8), keyPairMap.getPrivate());
         byte[] decrypt = RSAUtils.decrypt(encrypt, keyPairMap.getPublic());

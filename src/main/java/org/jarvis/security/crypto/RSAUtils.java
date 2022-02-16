@@ -1,6 +1,7 @@
 package org.jarvis.security.crypto;
 
 import lombok.SneakyThrows;
+import org.jarvis.misc.Assert;
 
 import javax.crypto.Cipher;
 import java.security.KeyFactory;
@@ -12,7 +13,9 @@ import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,6 +26,10 @@ public abstract class RSAUtils {
     private static final String CIPHER_MODE = "RSA/ECB/PKCS1Padding";
 
     private static final String ALGORITHM = "RSA";
+
+    private static final List<Integer> VALID_KEY_LENGTH = Arrays.asList(1024, 2048, 3072, 4096);
+
+    private static final int DEFAULT_KEY_LENGTH = 2048;
 
     public static byte[] encrypt(byte[] clearTextBytes, PublicKey publicKey) throws Exception {
         Cipher cipher = Cipher.getInstance(CIPHER_MODE);
@@ -48,12 +55,18 @@ public abstract class RSAUtils {
         return cipher.doFinal(cipherTextBytes);
     }
 
-    public static KeyPair getKeyPair() {
+    public static KeyPair genKeyPair() {
+        return genKeyPair(DEFAULT_KEY_LENGTH);
+    }
+
+    public static KeyPair genKeyPair(int keyLength) {
+        Assert.isTrue(VALID_KEY_LENGTH.contains(keyLength),
+                String.format("%d is not a valid RSA key length, valid is %s", keyLength, VALID_KEY_LENGTH));
         try {
             //KeyPairGenerator类用于生成公钥和密钥对，基于RSA算法生成对象
             KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(ALGORITHM);
-            //初始化密钥对生成器，密钥大小为96-1024位
-            keyPairGen.initialize(1024, new SecureRandom());
+            //初始化密钥对生成器(1024,2048,3072,4096)
+            keyPairGen.initialize(keyLength, new SecureRandom());
             //生成一个密钥对，保存在keyPair中
             return keyPairGen.generateKeyPair();
         } catch (NoSuchAlgorithmException e) {
@@ -61,8 +74,12 @@ public abstract class RSAUtils {
         }
     }
 
-    public static Map<Integer, byte[]> getKeyPairMap() {
-        KeyPair keyPair = getKeyPair();
+    public static Map<Integer, byte[]> genKeyPairMap() {
+        return genKeyPairMap(DEFAULT_KEY_LENGTH);
+    }
+
+    public static Map<Integer, byte[]> genKeyPairMap(int keyLength) {
+        KeyPair keyPair = genKeyPair(keyLength);
         //得到公钥
         PublicKey publicKey = keyPair.getPublic();
         //得到私钥
