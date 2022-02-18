@@ -1,5 +1,6 @@
 package org.jarvis.security.codec;
 
+import org.jarvis.codec.Base64Utils;
 import org.jarvis.security.crypto.RSAUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,15 @@ import java.security.KeyPair;
 import java.util.Map;
 
 class RSAUtilsTest {
+
+    @Test
+    void key_gen_test() {
+        Map<Integer, byte[]> keyPairMap = RSAUtils.genKeyPairMap(1024);
+        byte[] publicKeyByteArray = keyPairMap.get(0);
+        byte[] privateKeyByteArray = keyPairMap.get(1);
+        System.out.println("publicKey:"+ Base64Utils.encode(publicKeyByteArray));
+        System.out.println("privateKey:"+ Base64Utils.encode(privateKeyByteArray));
+    }
 
     @Test
     void public_encrypt_private_decrypt() throws Exception {
