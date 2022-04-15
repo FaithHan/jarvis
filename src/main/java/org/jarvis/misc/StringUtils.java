@@ -57,27 +57,35 @@ public abstract class StringUtils {
     }
 
     /**
-     * 12345678, *, 0, -1 --> *******
-     * 12345678, *, 1, -1 --> 1******
+     * 12345678, *, 0 --> *******
+     * 12345678, *, 1 --> 1******
+     * 12345678, *, 2 --> 12*****
+     */
+    public static String replace(String string, char letter, int beginInclusive) {
+        return replace(string, letter, beginInclusive, string.length());
+    }
+
+
+    /**
+     * 12345678, *, 0, -1 --> ******8
+     * 12345678, *, 1, -1 --> 1*****8
      * 12345678, *, 1, 7 --> 1*****8
-     *
-     * @param string
-     * @param letter
-     * @param beginInclusive
-     * @param endExclusive
-     * @return
      */
     public static String replace(String string, char letter, int beginInclusive, int endExclusive) {
-        if (endExclusive == -1) {
-            endExclusive = string.length();
+        int length = string.length();
+        if (length == 0) {
+            return string;
         }
-        if (beginInclusive < 0 || endExclusive > string.length() || endExclusive <= beginInclusive) {
+        beginInclusive = beginInclusive >= 0 ? beginInclusive : length + beginInclusive;
+        endExclusive = endExclusive >= 0 ? endExclusive : length + endExclusive;
+
+        if (beginInclusive < 0 || endExclusive > length || endExclusive <= beginInclusive) {
             throw new IllegalArgumentException("beginInclusive or endExclusive error");
         }
-        StringBuilder sb = new StringBuilder(string.length());
+        StringBuilder sb = new StringBuilder(length);
         sb.append(string, 0, beginInclusive);
         IntStream.range(beginInclusive, endExclusive).forEach(v -> sb.append(letter));
-        sb.append(string, endExclusive, string.length());
+        sb.append(string, endExclusive, length);
         return sb.toString();
     }
 }
