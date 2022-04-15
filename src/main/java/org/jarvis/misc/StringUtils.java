@@ -1,11 +1,19 @@
 package org.jarvis.misc;
 
+import java.util.stream.IntStream;
+
 public abstract class StringUtils {
 
     public static String capitalize(String string) {
         return string.substring(0, 1).toUpperCase() + string.substring(1);
     }
 
+    /**
+     * user_profile -> userProfile
+     *
+     * @param string
+     * @return
+     */
     public static String toCamelCase(String string) {
         StringBuilder sb = new StringBuilder(string.length());
         boolean nextCharToUpperCase = false;
@@ -21,8 +29,22 @@ public abstract class StringUtils {
         return sb.toString();
     }
 
+    /**
+     * userProfile -> user_profile
+     * UserProfile -> user_profile
+     *
+     * @param string
+     * @return
+     */
     public static String toUnderline(String string) {
+        if (string.isEmpty()) {
+            return string;
+        }
         StringBuilder sb = new StringBuilder(string.length());
+        char firstChar = sb.charAt(0);
+        if (Character.isUpperCase(firstChar)) {
+            sb.setCharAt(0, Character.toLowerCase(firstChar));
+        }
         for (char charValue : string.toCharArray()) {
             if (Character.isUpperCase(charValue)) {
                 sb.append('_');
@@ -31,6 +53,31 @@ public abstract class StringUtils {
                 sb.append(charValue);
             }
         }
+        return sb.toString();
+    }
+
+    /**
+     * 12345678, *, 0, -1 --> *******
+     * 12345678, *, 1, -1 --> 1******
+     * 12345678, *, 1, 7 --> 1*****8
+     *
+     * @param string
+     * @param letter
+     * @param beginInclusive
+     * @param endExclusive
+     * @return
+     */
+    public static String replace(String string, char letter, int beginInclusive, int endExclusive) {
+        if (endExclusive == -1) {
+            endExclusive = string.length();
+        }
+        if (beginInclusive < 0 || endExclusive > string.length() || endExclusive <= beginInclusive) {
+            throw new IllegalArgumentException("beginInclusive or endExclusive error");
+        }
+        StringBuilder sb = new StringBuilder(string.length());
+        sb.append(string, 0, beginInclusive);
+        IntStream.range(beginInclusive, endExclusive).forEach(v -> sb.append(letter));
+        sb.append(string, endExclusive, string.length());
         return sb.toString();
     }
 }
