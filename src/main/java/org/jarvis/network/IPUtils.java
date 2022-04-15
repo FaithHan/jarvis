@@ -35,6 +35,16 @@ public abstract class IPUtils {
                 (Long.parseLong(split[2]) << 8) + (Long.parseLong(split[3]));
     }
 
+    public static int ipToInt(String ip) {
+        String[] split = ip.split("\\.");
+        return (Integer.parseInt(split[0]) << 24) + (Integer.parseInt(split[1]) << 16) +
+                (Integer.parseInt(split[2]) << 8) + (Integer.parseInt(split[3]));
+    }
+
+    public static String ipToString(int ip) {
+        return String.format("%d.%d.%d.%d", ip >>> 24, (ip >>> 16) & 0xFF, (ip >>> 8) & 0xFF, ip & 0xFF);
+    }
+
     /**
      * long类型ip转字符串类型
      *
@@ -42,7 +52,7 @@ public abstract class IPUtils {
      * @return
      */
     public static String ipToString(long ip) {
-        return String.format("%d.%d.%d.%d", ip >> 24, (ip >> 16) & 0xFF, (ip >> 8) & 0xFF, ip & 0xFF);
+        return String.format("%d.%d.%d.%d", ip >>> 24, (ip >>> 16) & 0xFF, (ip >>> 8) & 0xFF, ip & 0xFF);
     }
 
     /**
