@@ -90,3 +90,79 @@ public final class JsonDesensitizedUtils {
     }
 
 }
+
+/*
+Gson 版本
+public final class JsonDesensitizedUtils {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(JsonDesensitizedUtils.class);
+
+    private static final char MASK_CHAR = '*';
+
+    private final List<String> sensitiveKeyList;
+
+    private final int maxSize;
+
+    public JsonDesensitizedUtils(List<String> sensitiveKeyList) {
+        this(sensitiveKeyList, Integer.MAX_VALUE);
+    }
+
+    public JsonDesensitizedUtils(List<String> sensitiveKeyList, int maxSize) {
+        this.sensitiveKeyList = sensitiveKeyList == null ? Collections.emptyList() : sensitiveKeyList;
+        this.maxSize = maxSize;
+    }
+
+    public String changeSensitiveMsg(String json) {
+        try {
+            JsonElement jsonElement = GsonUtils.parseAsElement(json);
+            if (jsonElement.isJsonObject()) {
+                return GsonUtils.toJson(changeSensitiveMsg(jsonElement.getAsJsonObject()));
+            } else if (jsonElement.isJsonArray()) {
+                return GsonUtils.toJson(changeSensitiveMsg(jsonElement.getAsJsonArray()));
+            }
+            return json;
+        } catch (JsonSyntaxException e) {
+            return json;
+        } catch (Exception e) {
+            LOGGER.error("change sensitive field error", e);
+            return json;
+        }
+    }
+
+    private JsonObject changeSensitiveMsg(JsonObject jsonObject) {
+        for (String key : jsonObject.keySet()) {
+            JsonElement jsonElement = jsonObject.get(key);
+            if (jsonElement.isJsonObject()) {
+                jsonObject.add(key, changeSensitiveMsg(jsonElement.getAsJsonObject()));
+            } else if (jsonElement.isJsonArray()) {
+                jsonObject.add(key, changeSensitiveMsg(jsonElement.getAsJsonArray()));
+            } else if (isSensitiveKey(key) && jsonElement.isJsonPrimitive()) {
+                String value = jsonElement.getAsString();
+                if (value.length() > maxSize) {
+                    value = value.substring(0, maxSize);
+                }
+                jsonObject.addProperty(key, StringUtils.replace(value, MASK_CHAR, value.length() >> 1));
+            }
+        }
+        return jsonObject;
+    }
+
+    private JsonArray changeSensitiveMsg(JsonArray jsonArray) {
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JsonElement jsonElement = jsonArray.get(i);
+            if (jsonElement.isJsonArray()) {
+                jsonArray.set(i, changeSensitiveMsg(jsonElement.getAsJsonArray()));
+            } else if (jsonElement.isJsonObject()) {
+                jsonArray.set(i, changeSensitiveMsg(jsonElement.getAsJsonObject()));
+            }
+        }
+        return jsonArray;
+    }
+
+
+    private boolean isSensitiveKey(String key) {
+        return this.sensitiveKeyList.contains(key);
+    }
+
+}
+*/
