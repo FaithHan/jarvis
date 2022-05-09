@@ -1,6 +1,7 @@
 package org.jarvis.id;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.jarvis.json.JsonUtils;
 import org.jarvis.misc.Assert;
 
@@ -19,15 +20,15 @@ import static java.sql.Connection.TRANSACTION_READ_COMMITTED;
 
 /**
  * 分布式自增ID(基于号段模式)
- *
+ * <p>
  * CREATE TABLE id_generator
  * (
  * id       int unsigned PRIMARY KEY AUTO_INCREMENT comment '主键',
  * max_id   bigint unsigned NOT NULL COMMENT '当前最大id',
  * biz_type varchar(32)     NOT NULL COMMENT '业务类型',
- * version  bigint unsigned NOT NULL COMMENT '版本号'
+ * version  bigint unsigned NOT NULL COMMENT '版本号',
+ * unique key biz_type_unique_index (biz_type)
  * );
- *
  */
 @Slf4j
 public class SegmentIdGenerator implements IdGenerator<Long> {
@@ -43,6 +44,7 @@ public class SegmentIdGenerator implements IdGenerator<Long> {
     private final boolean asyncUpdate;
 
     private final Semaphore semaphore = new Semaphore(1);
+    private final boolean useDbLock;
 
     public SegmentIdGenerator(DataSource dataSource, String bizType, int capacity) {
         this(dataSource, bizType, capacity, capacity / 4, true);
@@ -53,6 +55,15 @@ public class SegmentIdGenerator implements IdGenerator<Long> {
                               int capacity,
                               int threshold,
                               boolean asyncUpdate) {
+        this(dataSource, bizType, capacity, threshold, asyncUpdate, true);
+    }
+
+    public SegmentIdGenerator(DataSource dataSource,
+                              String bizType,
+                              int capacity,
+                              int threshold,
+                              boolean asyncUpdate,
+                              boolean useDbLock) {
 
         Assert.notNull(dataSource, "dataSource can not be null");
         Assert.isTrue(bizType != null && bizType.trim().length() > 0, "bizType can not be blank");
@@ -67,6 +78,7 @@ public class SegmentIdGenerator implements IdGenerator<Long> {
         this.idQueue = new ArrayBlockingQueue<>(capacity);
         this.threshold = threshold;
         this.asyncUpdate = asyncUpdate;
+        this.useDbLock = useDbLock;
     }
 
 
@@ -99,7 +111,7 @@ public class SegmentIdGenerator implements IdGenerator<Long> {
             return;
         }
         Connection connection = null;
-        String querySql = "select id, max_id, biz_type, version from id_generator where biz_type = ?";
+        String querySql = "select id, max_id, biz_type, version from id_generator where biz_type = ?" + (useDbLock ? " for update" : StringUtils.EMPTY);
         String updateSql = "update id_generator set max_id = ?, version = version + 1 where version = ? and biz_type = ?";
         try {
             boolean result = false;
