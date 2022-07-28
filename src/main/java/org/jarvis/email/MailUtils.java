@@ -34,7 +34,8 @@ public class MailUtils {
 
     private static final JavaMailSender SENDER;
 
-    public static String from = "hanfei08@baidu.com";
+//    public static String from = "hanfei08@baidu.com";
+    public static String from = "1975772822@hanfeii.top";
 
     static {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();

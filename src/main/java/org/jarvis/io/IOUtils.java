@@ -1,7 +1,5 @@
 package org.jarvis.io;
 
-import org.apache.commons.io.output.NullOutputStream;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;

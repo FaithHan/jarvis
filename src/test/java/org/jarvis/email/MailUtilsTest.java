@@ -13,7 +13,7 @@ class MailUtilsTest {
     @Test
     void sendMailWithAttachment() throws FileNotFoundException {
         MailUtils.sendHtmlMail(
-                new String[]{"****@qq.com"},
+                new String[]{"hanfei08@baidu.com"},
 //                new String[]{"freepuresakura@gmail.com"},
                 null,
                 null,

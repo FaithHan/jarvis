@@ -1,5 +1,6 @@
 package org.jarvis.http;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -10,13 +11,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 class HttpUtilsTest {
@@ -56,6 +64,7 @@ class HttpUtilsTest {
                 .proxy("localhost", 6152)
                 .chromeMode()
                 .build();
+
         Response<String> response = httpSite.get("https://www.baidu.com/s?wd=ip", String.class);
         System.out.println(response.getHttpStatusCode());
         System.out.println(response.getHeader());
@@ -134,4 +143,55 @@ class HttpUtilsTest {
         CloseableHttpResponse execute = HttpClientBuilder.create().build().execute(httpGet);
     }
 
+    @Test
+    void name2() throws IOException {
+        Arrays.asList(
+                "/order/getConfig",
+                "/order/list",
+                "/order/orderStatusNum",
+                "/order/orderDetail",
+                "/order/findOrderModel",
+                "/order/queryOrderStatus",
+                "/order/orderProps",
+                "/order/findOrderModelWithProgram",
+                "/order/findOrderInfo",
+                "/order/findOrderInfoByTradeNo",
+                "/order/queryOrder",
+                "/order/findOrderBaoInfo",
+                "/order/syncOrderEs"
+        );
+    }
+
+    public static List<Integer> spiralOrder(int[][] matrix) {
+        int top = 0;
+        int buttom = matrix.length-1;
+        int left = 0;
+        int right = matrix[0].length - 1;
+        int size = matrix.length * matrix[0].length;
+        List<Integer> list = new ArrayList<>();
+        while(list.size() != size) {
+            for(int i = left; i <= right; i++){
+                list.add(matrix[top][i]);
+            }
+            top++;
+            for(int i = top; i<= buttom;i++){
+                list.add(matrix[i][right]);
+            }
+            right--;
+            for(int i = right; i>=left; i--){
+                list.add(matrix[buttom][i]);
+            }
+            buttom--;
+            for(int i = buttom; i>=top; i--){
+                list.add(matrix[i][left]);
+            }
+            left++;
+        }
+        return list;
+    }
+
+    public static void main(String[] args) {
+        int[][] ints =  new int[][]{{1,2,3,4},{5,6,7,8},{9,10,11,12}};
+        spiralOrder(ints);
+    }
 }

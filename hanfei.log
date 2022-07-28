@@ -1,0 +1,26 @@
+2021-11-25 20:34:01.911  INFO 42538 --- [main] org.jarvis.JarvisApplication             : Starting JarvisApplication using Java 1.8.0_192 on B000000406331P with PID 42538 (/Users/hanfei08/IdeaProjects/jarvis/target/classes started by hanfei08 in /Users/hanfei08/IdeaProjects/jarvis)
+2021-11-25 20:34:01.920  INFO 42538 --- [main] org.jarvis.JarvisApplication             : No active profile set, falling back to default profiles: default
+2021-11-25 20:34:02.980  INFO 42538 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-11-25 20:34:02.982  INFO 42538 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2021-11-25 20:34:03.150  INFO 42538 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 162 ms. Found 1 JDBC repository interfaces.
+2021-11-25 20:34:03.181  INFO 42538 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-11-25 20:34:03.183  INFO 42538 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-11-25 20:34:03.207  INFO 42538 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface org.jarvis.jdbc.data.UserOneToOneTestRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
+2021-11-25 20:34:03.208  INFO 42538 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 15 ms. Found 0 Redis repository interfaces.
+2021-11-25 20:34:03.943  INFO 42538 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2021-11-25 20:34:03.950  INFO 42538 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-11-25 20:34:03.950  INFO 42538 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.55]
+2021-11-25 20:34:04.041  INFO 42538 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-11-25 20:34:04.041  INFO 42538 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2055 ms
+2021-11-25 20:34:04.854  WARN 42538 --- [main] i.n.r.d.DnsServerAddressStreamProviders  : Can not find io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider in the classpath, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS.
+2021-11-25 20:34:05.886  INFO 42538 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2021-11-25 20:34:06.609  INFO 42538 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2021-11-25 20:34:06.700  WARN 42538 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.OffsetDateTime to class org.springframework.data.jdbc.core.convert.JdbcValue as writing converter although it doesn't convert to a store-supported type! You might want to check your annotation setup at the converter implementation.
+2021-11-25 20:34:07.621  INFO 42538 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2021-11-25 20:34:07.645  INFO 42538 --- [main] org.jarvis.JarvisApplication             : Started JarvisApplication in 6.287 seconds (JVM running for 7.277)
+2021-11-25 20:34:24.335  INFO 42538 --- [main] o.j.s.misc.ApplicationInfoLogRunner      : ********************
+2021-11-25 20:34:24.345  INFO 42538 --- [main] o.j.s.misc.ApplicationInfoLogRunner      : Application PID:  42538
+2021-11-25 20:34:24.347  INFO 42538 --- [main] o.j.s.misc.ApplicationInfoLogRunner      : Application Java version: 1.8
+2021-11-25 20:34:24.348  INFO 42538 --- [main] o.j.s.misc.ApplicationInfoLogRunner      : Application started at local address:  http://127.0.0.1:8080
+2021-11-25 20:34:24.348  INFO 42538 --- [main] o.j.s.misc.ApplicationInfoLogRunner      : Application started at internet address:  http://172.24.242.78:8080
+2021-11-25 20:34:24.348  INFO 42538 --- [main] o.j.s.misc.ApplicationInfoLogRunner      : ********************

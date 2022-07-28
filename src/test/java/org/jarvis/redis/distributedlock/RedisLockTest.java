@@ -3,16 +3,12 @@ package org.jarvis.redis.distributedlock;
 import org.jarvis.clock.Stopwatch;
 import org.jarvis.clock.TimeUtils;
 import org.jarvis.redis.RedisUtils;
-import org.jarvis.thread.ThreadUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class RedisLockTest {
 

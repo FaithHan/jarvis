@@ -54,7 +54,7 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
  * <h1>参考文档</h1>
  * <p> http//springfox.github.io/springfox/docs/current/
  */
-@Configuration
+//@Configuration
 //@EnableSwagger2
 public class SpringFoxConfig {
 
