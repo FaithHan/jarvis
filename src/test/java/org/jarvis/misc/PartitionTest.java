@@ -13,7 +13,7 @@ class PartitionTest {
     @Test
     void test() {
         List<Integer> collect = IntStream.rangeClosed(1, 105).boxed().collect(Collectors.toList());
-        Partition<Integer> partition = Partition.partition(collect, 10);
+        Partition<Integer> partition = Partition.create(collect, 10);
         for (List<Integer> integers : partition) {
             System.out.println(integers);
         }
